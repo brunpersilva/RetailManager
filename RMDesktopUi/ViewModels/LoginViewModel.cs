@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RMDesktopUi.Library.Api;
 
 namespace RMDesktopUi.ViewModels
 {
@@ -65,7 +66,6 @@ namespace RMDesktopUi.ViewModels
             }
         }
 
-
         public bool CanLogIn
         {
             get
@@ -85,6 +85,9 @@ namespace RMDesktopUi.ViewModels
             {
                 ErrorMessage = "";
                 var result = await _apihelper.Authenticate(UserName, Password);
+
+                //Capture more information about the user
+                await _apihelper.GetLoggedUserInfo(result.Access_Token);
             }
             catch (Exception ex)
             {
