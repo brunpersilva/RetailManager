@@ -31,13 +31,12 @@ namespace RMDesktopUi.ViewModels
             set { _cart = value; NotifyOfPropertyChange(() => Cart); }
         }
 
+        private int _itemQuantity;
 
-        private string _itemQuantity;
-
-        public string ItemQuantity
+        public int ItemQuantity
         {
             get { return _itemQuantity; }
-            set { _itemQuantity = value; NotifyOfPropertyChange(() => Products); }
+            set { _itemQuantity = value; NotifyOfPropertyChange(() => ItemQuantity); }
         }
 
         public string SubTotal
@@ -54,7 +53,6 @@ namespace RMDesktopUi.ViewModels
         {
             get { return "$0.00";  }
         }
-
 
         public bool CanAddToCart
         {
