@@ -16,7 +16,6 @@ namespace RMDesktopUi.Library.Api
     {
         private HttpClient _apiClient;
         private ILoggedInUserModel _loggedInUser;
-        public HttpClient ApiClient => throw new NotImplementedException();
         public APIHelper(ILoggedInUserModel loggedInUser)
         {
             InitializeClient();
