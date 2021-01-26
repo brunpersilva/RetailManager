@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using RMDesktopUI.Library.Api;
+using RMDesktopUI.Library.Helpers;
 
 namespace RMDesktopUi
 {
@@ -35,7 +36,9 @@ namespace RMDesktopUi
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<ILoggedInUserModel, LoggedInUserModel>()
+                .Singleton<IConfigHelper, ConfigHelper>()
                 .Singleton<IAPIHelper, APIHelper>();
+                
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)
