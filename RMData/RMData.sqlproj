@@ -73,4 +73,7 @@
   <ItemGroup>
     <None Include="PublishLocations\RMData.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="RMData.refactorlog" />
+  </ItemGroup>
 </Project>
