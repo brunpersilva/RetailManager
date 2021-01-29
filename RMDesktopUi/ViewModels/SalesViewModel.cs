@@ -19,7 +19,7 @@ namespace RMDesktopUi.ViewModels
         IConfigHelper _configHelper;
         ISaleEndpoint _saleEndpoint;
         IMapper _mapper;
-        public SalesViewModel(IProductEndpoint productEndpoint, 
+        public SalesViewModel(IProductEndpoint productEndpoint,
             IConfigHelper configHelper, ISaleEndpoint saleEndpoint, IMapper mapper)
         {
             _productEndpoint = productEndpoint;
@@ -61,6 +61,18 @@ namespace RMDesktopUi.ViewModels
                 NotifyOfPropertyChange(() => SelectedProduct);
                 NotifyOfPropertyChange(() => CanAddToCart);
 
+            }
+        }
+        private CartItemDisplayModel _selectedCartItem;
+
+        public CartItemDisplayModel SelectedCartItem
+        {
+            get { return _selectedCartItem; ; }
+            set
+            {
+                _selectedCartItem = value;
+                NotifyOfPropertyChange(() => SelectedCartItem);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
             }
         }
 
@@ -169,6 +181,10 @@ namespace RMDesktopUi.ViewModels
             get
             {
                 bool output = false;
+                if (SelectedCartItem != null && SelectedCartItem?.Product.QuantityInStock > 0)
+                {
+                    output = true;
+                }
 
                 return output;
             }
@@ -176,6 +192,17 @@ namespace RMDesktopUi.ViewModels
 
         public void RemoveFromCart()
         {
+
+            SelectedCartItem.Product.QuantityInStock += 1;
+
+            if (SelectedCartItem.QuantityInCart > 1)
+            {
+                SelectedCartItem.QuantityInCart -= 1;
+            }
+            else
+            {
+                Cart.Remove(SelectedCartItem);
+            }
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
