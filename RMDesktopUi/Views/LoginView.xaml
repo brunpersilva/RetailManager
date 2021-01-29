@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RMDesktopUi.Views"
              mc:Ignorable="d" Background="white" FontSize="24"
              d:DesignHeight="425" d:DesignWidth="800">
-    <Grid>
+    <Grid HorizontalAlignment="Right" Width="800">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
@@ -24,7 +24,7 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 5 20" 
                    HorizontalAlignment="Center" FontSize="64" FontFamily="Segoe UI Light">
             Login Form
-        </TextBlock>
+        </TextBlock>        
         <!--Error Message row-->
         <TextBlock x:Name="ErrorMessage" Visibility="{Binding IsErrorVisible, Converter={StaticResource BooleanToVisibilityConverter}, FallbackValue=Collapsed}"
                    Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
@@ -39,10 +39,10 @@
                    Margin="0 0 0 10"/>
         
         <!--Password row -->
-        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0 0 0 20">
-            Password:
+        <TextBlock   Grid.Row="3" Grid.Column="1" Margin="0 0 0 20">
+            Password: 
         </TextBlock>
-        <PasswordBox x:Name="Password" Grid.Row="3" Grid.Column="2" MinWidth="350"  
+        <PasswordBox  x:Name="Password" Grid.Row="3" Grid.Column="2" MinWidth="350"  
                    Margin="0 0 5 10"/>
         <!--Login row -->
         <Button Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Padding="20 5"
