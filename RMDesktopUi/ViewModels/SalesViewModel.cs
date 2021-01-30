@@ -75,6 +75,16 @@ namespace RMDesktopUi.ViewModels
                 NotifyOfPropertyChange(() => CanRemoveFromCart);
             }
         }
+        private async Task ResetSalesViewModel()
+        {
+            Cart = new BindingList<CartItemDisplayModel>();
+            //todo - add clear the selectedcartitem if it does not do it by itself
+            await LoadProducts();
+            NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => CanCheckOut);
+        }
 
         private BindingList<CartItemDisplayModel> _cart = new BindingList<CartItemDisplayModel>();
 
@@ -181,7 +191,7 @@ namespace RMDesktopUi.ViewModels
             get
             {
                 bool output = false;
-                if (SelectedCartItem != null && SelectedCartItem?.Product.QuantityInStock > 0)
+                if (SelectedCartItem != null && SelectedCartItem?.QuantityInCart > 0)
                 {
                     output = true;
                 }
@@ -207,6 +217,8 @@ namespace RMDesktopUi.ViewModels
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => CanCheckOut);
+            NotifyOfPropertyChange(() => CanAddToCart);
+
         }
 
         public bool CanCheckOut
@@ -236,6 +248,7 @@ namespace RMDesktopUi.ViewModels
                 }); ;
             }
             await _saleEndpoint.PostSale(sale);
+            await ResetSalesViewModel();
         }
     }
 }
