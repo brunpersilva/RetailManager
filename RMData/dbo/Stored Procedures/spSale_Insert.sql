@@ -12,6 +12,6 @@ set nocount on;
 	insert into Sale(CashierId, SaleDate, SubTotal, Tax, Total)
 	values(@CashierId, @SaleDate, @SubTotal, @Tax, @Total);
 
-	select @Id = SCOPE_IDENTITY();
+	select @Id = @@IDENTITY;
 
 	end
