@@ -9,14 +9,13 @@ using System.Web.Http;
 
 namespace RMDataManager.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Cashier")]
     public class ProductController : ApiController
     {
         public List<ProductModel> Get()
         {
             ProductData data = new ProductData();
             return data.GetProducts();
-             
         }
     }
 }
