@@ -10,9 +10,9 @@ using System.Web.Http;
 
 namespace RMDataManager.Controllers
 {
+    [Authorize]
     public class SaleController : ApiController
     {
-        [Authorize]
         public void Post(SaleModel saleModel)
         {
             SaleData data = new SaleData();
@@ -20,5 +20,12 @@ namespace RMDataManager.Controllers
             data.SaveSales(saleModel, userId);
         }
 
+        [Route("GetSalesReport")]
+        public List<SaleReportModel> GetSalesReport()
+        {
+            SaleData data = new SaleData();
+            return data.GetSaleReport();
+        }
     }
+
 }

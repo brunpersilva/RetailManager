@@ -41,7 +41,6 @@ namespace RMDataManager.Library.DataAcess
 
             sale.Total = sale.SubTotal + sale.Tax;
 
-
             using (SqlDataAcess sql = new SqlDataAcess())
             {
                 try
@@ -66,6 +65,12 @@ namespace RMDataManager.Library.DataAcess
                     throw;
                 }
             }
+        }
+        public List<SaleReportModel> GetSaleReport()
+        {
+            SqlDataAcess sql = new SqlDataAcess();
+            var output = sql.LoadData<SaleReportModel, dynamic>("spSale_SaleReport",new { }, "RMData");
+            return output;
         }
     }
 }
