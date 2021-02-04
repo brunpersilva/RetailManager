@@ -10,6 +10,8 @@ using System.Globalization;
 using AutoMapper;
 using RMDesktopUi.Models;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Windows;
 
 namespace RMDesktopUi.ViewModels
 {
@@ -19,19 +21,49 @@ namespace RMDesktopUi.ViewModels
         IConfigHelper _configHelper;
         ISaleEndpoint _saleEndpoint;
         IMapper _mapper;
+        private readonly StatusInfoViewModel _status;
+        private readonly IWindowManager _window;
         public SalesViewModel(IProductEndpoint productEndpoint,
-            IConfigHelper configHelper, ISaleEndpoint saleEndpoint, IMapper mapper)
+            IConfigHelper configHelper, ISaleEndpoint saleEndpoint, 
+            IMapper mapper, StatusInfoViewModel status, IWindowManager window)
         {
             _productEndpoint = productEndpoint;
             _saleEndpoint = saleEndpoint;
             _configHelper = configHelper;
             _mapper = mapper;
+            _status = status;
+            _window = window;
         }
 
         protected override async void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            await LoadProducts();
+            try
+            {
+                await LoadProducts();
+            }
+            catch (Exception ex)
+            {
+                dynamic setting = new ExpandoObject();
+                setting.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+                setting.ResizeMode = ResizeMode.NoResize;
+                setting.Title = "System Error";
+
+                //var info = IoC.Get<StatusInfoViewModel>();
+
+                if (ex.Message == "Unauthorized")
+                {
+                    _status.UpdateMessage("Unothorized Acess", "You do not have permition to interact with the sales form.");
+                    _window.ShowDialog(_status, null, setting);  
+                }
+                else
+                {
+                    _status.UpdateMessage("Fatal Exception", ex.Message);
+                    _window.ShowDialog(_status, null, setting);
+                }
+                TryClose();
+            }
+            
         }
         private async Task LoadProducts()
         {
