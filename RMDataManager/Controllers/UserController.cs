@@ -21,6 +21,7 @@ namespace RMDataManager.Controllers
 
             return data.GetUSerById(userId).First();
         }
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/User/Admin/GetAllUsers")]
@@ -41,10 +42,45 @@ namespace RMDataManager.Controllers
                     (s1, s2) => new { a = s1, b = s2 }).ToDictionary(z => z.a.RoleId, z => z.b.Name)
                 }).ToList();
                 return output;
-               
             }
-            
+        }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Route("api/User/Admin/GetAllRoles")]
+        public Dictionary<string, string> GetAllRoles()
+        {
+            using(var context = new ApplicationDbContext())
+            {
+                var output = context.Roles.ToDictionary(x => x.Id, x => x.Name);  
+                return output;
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("api/User/Admin/AddRole")]
+        public void AddARole(UserRolePairModel pairing)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                userManager.AddToRole(pairing.UserId, pairing.RoleName);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [Route("api/User/Admin/RemoveRole")]
+        public void RemoveARole(UserRolePairModel pairing)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                userManager.RemoveFromRole(pairing.UserId, pairing.RoleName);
+            }
         }
     }
 }
