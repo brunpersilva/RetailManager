@@ -5,14 +5,21 @@ using Dapper;
 using System.Data;
 using System.Data.SqlClient;
 using System;
+using Microsoft.Extensions.Configuration;
 
 namespace RMDataManager.Library.Internal.DataAcess
 {
     internal class SqlDataAcess : IDisposable
     {
+        private bool isClosed = false;
+        private readonly IConfiguration _config;
+        public SqlDataAcess(IConfiguration config)
+        {
+            _config = config;
+        }
         public string GetConnectionString(string name)
         {
-            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            return _config.GetConnectionString(name);
         }
 
         public List<T> LoadData<T, U>(string storedProcedure, U paramater, string connectionStringName)
@@ -59,7 +66,7 @@ namespace RMDataManager.Library.Internal.DataAcess
 
             return rows;
         }
-        private bool isClosed = false;   
+
         public void CommitTransaction()
         {
             _transaction?.Commit();
