@@ -17,15 +17,17 @@ namespace RMApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IConfiguration _config;
-
         public ProductController(IConfiguration config)
         {
             _config = config;
         }
+
+        [HttpGet]
         public List<ProductModel> Get()
         {
             ProductData data = new ProductData(_config);
             return data.GetProducts();
         }
+
     }
 }

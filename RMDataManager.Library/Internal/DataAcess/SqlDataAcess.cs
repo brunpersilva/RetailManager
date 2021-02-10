@@ -11,7 +11,7 @@ namespace RMDataManager.Library.Internal.DataAcess
 {
     internal class SqlDataAcess : IDisposable
     {
-        private bool isClosed = false;
+        private bool _isClosed = false;
         private readonly IConfiguration _config;
         public SqlDataAcess(IConfiguration config)
         {
@@ -51,7 +51,7 @@ namespace RMDataManager.Library.Internal.DataAcess
             _connection.Open();
 
             _transaction = _connection.BeginTransaction();
-            isClosed = false;
+            _isClosed = false;
         }
         public void SaveDataInTransaction<T>(string storedProcedure, T paramater)
         {
@@ -71,18 +71,18 @@ namespace RMDataManager.Library.Internal.DataAcess
         {
             _transaction?.Commit();
             _connection?.Close();
-            isClosed = true;
+            _isClosed = true;
         }
         public void RollbackTransaction()
         {
             _transaction?.Rollback();
             _connection?.Close();
-            isClosed = true;
+            _isClosed = true;
         }
 
         public void Dispose()
         {
-            if (!isClosed)
+            if (!_isClosed)
             {
                 try
                 {

@@ -20,7 +20,7 @@ namespace RMDataManager.Library.DataAcess
         public List<UserModel> GetUSerById(string Id)
         {
             SqlDataAcess sql = new SqlDataAcess(_config);
-            var p = new { Id = Id };
+            var p = new { Id };
 
             var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", p, "RMData");
 

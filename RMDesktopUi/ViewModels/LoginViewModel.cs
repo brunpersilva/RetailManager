@@ -14,8 +14,8 @@ namespace RMDesktopUi.ViewModels
     {
         private string _userName = "brunpersilva@gmail.com";
         private string _password = "Senha12.";
-        private IAPIHelper _apihelper;
-        private IEventAggregator _events;
+        private readonly IAPIHelper _apihelper;
+        private readonly IEventAggregator _events;
         public LoginViewModel(IAPIHelper apihelper, IEventAggregator events)
         {
             _apihelper = apihelper;
