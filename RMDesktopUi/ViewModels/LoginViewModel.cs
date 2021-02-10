@@ -92,7 +92,7 @@ namespace RMDesktopUi.ViewModels
                 //Capture more information about the user
                 await _apihelper.GetLoggedUserInfo(result.Access_Token);
 
-                _events.PublishOnUIThread(new LogOnEvent());
+                await _events.PublishOnUIThreadAsync(new LogOnEvent());
             }
             catch (Exception ex)
             {

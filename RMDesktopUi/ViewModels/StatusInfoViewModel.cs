@@ -20,7 +20,7 @@ namespace RMDesktopUi.ViewModels
         }
         public void Close()
         {
-            TryClose();
+            TryCloseAsync();
         }
     }
 }

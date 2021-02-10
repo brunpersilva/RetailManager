@@ -17,10 +17,10 @@ namespace RMDesktopUi.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        IProductEndpoint _productEndpoint;
-        IConfigHelper _configHelper;
-        ISaleEndpoint _saleEndpoint;
-        IMapper _mapper;
+        readonly IProductEndpoint _productEndpoint;
+        readonly IConfigHelper _configHelper;
+        readonly ISaleEndpoint _saleEndpoint;
+        readonly IMapper _mapper;
         private readonly StatusInfoViewModel _status;
         private readonly IWindowManager _window;
         public SalesViewModel(IProductEndpoint productEndpoint,
@@ -54,14 +54,15 @@ namespace RMDesktopUi.ViewModels
                 if (ex.Message == "Unauthorized")
                 {
                     _status.UpdateMessage("Unothorized Acess", "You do not have permition to interact with the sales form.");
-                    _window.ShowDialog(_status, null, setting);  
+                    await _window.ShowDialogAsync(_status, null, setting);  
                 }
                 else
                 {
                     _status.UpdateMessage("Fatal Exception", ex.Message);
-                    _window.ShowDialog(_status, null, setting);
+                    await _window.ShowDialogAsync(_status, null, setting);
                 }
-                TryClose();
+
+                TryCloseAsync();
             }
             
         }
