@@ -9,20 +9,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace RMDataManager.Library.DataAcess
 {
-    public class UserData
+    public class UserData : IUserData
     {
-        private readonly IConfiguration _config;
+        private readonly ISqlDataAcess _sql;
 
-        public UserData(IConfiguration config)
+        public UserData(ISqlDataAcess sql)
         {
-            _config = config;
+            _sql = sql;
         }
         public List<UserModel> GetUSerById(string Id)
         {
-            SqlDataAcess sql = new SqlDataAcess(_config);
-            var p = new { Id };
-
-            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", p, "RMData");
+            var output = _sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", new { Id }, "RMData");
 
             return output;
         }

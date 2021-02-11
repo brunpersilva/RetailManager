@@ -17,6 +17,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using RMDataManager.Library.DataAcess;
+using RMDataManager.Library.Internal.DataAcess;
 
 namespace RMApi
 {
@@ -47,6 +49,13 @@ namespace RMApi
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            //Personal Services
+            services.AddTransient<IInventoryData, InventoryData>();
+            services.AddTransient<ISqlDataAcess, SqlDataAcess>();
+            services.AddTransient<IProductData, ProductData>();
+            services.AddTransient<ISaleData, SaleData>();
+            services.AddTransient<IUserData, UserData>();
 
             services.AddAuthentication(options =>
             {

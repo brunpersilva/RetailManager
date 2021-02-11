@@ -23,22 +23,20 @@ namespace RMApi.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _config;
+        private readonly IUserData _userData;
+
         public UserController(ApplicationDbContext context, 
-            UserManager<IdentityUser> userManager, IConfiguration config)
+            UserManager<IdentityUser> userManager, IUserData userData)
         {
             _context = context;
             _userManager = userManager;
-            _config = config;
+            _userData = userData;
         }
         [HttpGet]
         public UserModel GetById()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            UserData data = new UserData(_config);
-
-            return data.GetUSerById(userId).First();
+            return _userData.GetUSerById(userId).First();
         }
 
         [Authorize(Roles = "Admin")]

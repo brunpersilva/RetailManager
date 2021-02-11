@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace RMDataManager.Library.Internal.DataAcess
 {
-    internal class SqlDataAcess : IDisposable
+    public class SqlDataAcess : IDisposable, ISqlDataAcess
     {
         private bool _isClosed = false;
         private readonly IConfiguration _config;
@@ -62,7 +62,7 @@ namespace RMDataManager.Library.Internal.DataAcess
         public List<T> LoadDataInTransaction<T, U>(string storedProcedure, U paramater)
         {
             List<T> rows = _connection.Query<T>(storedProcedure, paramater,
-                   commandType: CommandType.StoredProcedure, transaction : _transaction).ToList();
+                   commandType: CommandType.StoredProcedure, transaction: _transaction).ToList();
 
             return rows;
         }
@@ -96,12 +96,7 @@ namespace RMDataManager.Library.Internal.DataAcess
 
             _transaction = null;
             _connection = null;
-            
+
         }
-        //open connect/start transaction method
-        //load using the transaction
-        //save using the transaction
-        //close connection/stop transaction methid
-        //dispose
     }
 }
