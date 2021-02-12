@@ -139,7 +139,7 @@ namespace RMDesktopUi.ViewModels
                     _status.UpdateMessage("Fatal Exception", ex.Message);
                     await _window.ShowDialogAsync(_status, null, setting);
                 }
-                TryCloseAsync();
+                await TryCloseAsync();
             }
 
         }
