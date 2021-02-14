@@ -56,6 +56,7 @@ namespace RMDesktopUi.ViewModels
             {
                 _selectedUserRole = value;
                 NotifyOfPropertyChange(() => SelectedUserRole);
+                NotifyOfPropertyChange(() => CanRemoveSelectedRole);
             }
         }
         private string _selectedAvailableRole;
@@ -67,6 +68,7 @@ namespace RMDesktopUi.ViewModels
             {
                 _selectedAvailableRole = value;
                 NotifyOfPropertyChange(() => SelectedAvailableRole);
+                NotifyOfPropertyChange(() => CanAddSelectedRole);
             }
         }
 
@@ -147,15 +149,30 @@ namespace RMDesktopUi.ViewModels
         {
             var userList = await _userEndpoint.GetAll();
             Users = new BindingList<UserModel>(userList);
-        } 
+        }
         private async Task LoadRoles()
         {
             var roles = await _userEndpoint.GetAllRoles();
+            AvailableRoles.Clear();
             foreach (var role in roles)
             {
                 if (UserRoles.IndexOf(role.Value) < 0)
                 {
                     AvailableRoles.Add(role.Value);
+                }
+            }
+        }
+        public bool CanAddSelectedRole
+        {
+            get
+            {
+                if (SelectedUser is null || SelectedAvailableRole is null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
                 }
             }
         }
@@ -165,11 +182,25 @@ namespace RMDesktopUi.ViewModels
             UserRoles.Add(SelectedAvailableRole);
             AvailableRoles.Remove(SelectedAvailableRole);
         }
+        public bool CanRemoveSelectedRole
+        {
+            get
+            {
+                if (SelectedUser is null || SelectedUserRole is null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
         public async Task RemoveSelectedRole()
         {
             await _userEndpoint.RemoveUserFromRole(SelectedUser.Id, SelectedUserRole);
             AvailableRoles.Add(SelectedUserRole);
-            UserRoles.Remove(SelectedUserRole);           
+            UserRoles.Remove(SelectedUserRole);
         }
     }
 }
