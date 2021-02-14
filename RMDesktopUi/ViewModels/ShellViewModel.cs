@@ -42,6 +42,11 @@ namespace RMDesktopUi.ViewModels
                 return output;
             }
         }
+        public bool IsLoggedOut
+        {
+            get { return !IsLoggedIn; }
+        }
+
         public void ExitApplication()
         {
            TryCloseAsync();
@@ -56,17 +61,18 @@ namespace RMDesktopUi.ViewModels
             _aPIHelper.LogOffUser();
             await ActivateItemAsync(IoC.Get<LoginViewModel>());
             NotifyOfPropertyChange(() => IsLoggedIn);
+            NotifyOfPropertyChange(() => IsLoggedOut);
         }
-
-        //public void Handle(LogOnEvent message)
-        //{
-            
-        //}
+        public async Task Login()
+        {
+            await ActivateItemAsync(IoC.Get<LoginViewModel>());
+        }
 
         public async Task HandleAsync(LogOnEvent message, CancellationToken cancellationToken)
         {
             await ActivateItemAsync(IoC.Get<SalesViewModel>(), cancellationToken);
             NotifyOfPropertyChange(() => IsLoggedIn);
+            NotifyOfPropertyChange(() => IsLoggedOut);
         }
     }
 }
