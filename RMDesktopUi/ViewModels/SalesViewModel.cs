@@ -1,6 +1,5 @@
 ﻿using Caliburn.Micro;
 using RMDesktopUI.Library.Api;
-using RMDesktopUI.Library.Helpers;
 using RMDesktopUI.Library.Models;
 using System;
 using System.ComponentModel;
@@ -12,24 +11,26 @@ using RMDesktopUi.Models;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Windows;
+using Microsoft.Extensions.Configuration;
 
 namespace RMDesktopUi.ViewModels
 {
     public class SalesViewModel : Screen
     {
         readonly IProductEndpoint _productEndpoint;
-        readonly IConfigHelper _configHelper;
+        private readonly IConfiguration _configuration;
         readonly ISaleEndpoint _saleEndpoint;
         readonly IMapper _mapper;
         private readonly StatusInfoViewModel _status;
         private readonly IWindowManager _window;
         public SalesViewModel(IProductEndpoint productEndpoint,
-            IConfigHelper configHelper, ISaleEndpoint saleEndpoint, 
+            IConfiguration configuration , ISaleEndpoint saleEndpoint, 
             IMapper mapper, StatusInfoViewModel status, IWindowManager window)
         {
             _productEndpoint = productEndpoint;
+            _configuration = configuration;
             _saleEndpoint = saleEndpoint;
-            _configHelper = configHelper;
+            _configuration = configuration;
             _mapper = mapper;
             _status = status;
             _window = window;
@@ -62,7 +63,7 @@ namespace RMDesktopUi.ViewModels
                     await _window.ShowDialogAsync(_status, null, setting);
                 }
 
-                TryCloseAsync();
+                await TryCloseAsync();
             }
             
         }
@@ -159,7 +160,7 @@ namespace RMDesktopUi.ViewModels
         private decimal CalculateTax()
         {
             decimal taxAmount = 0;
-            decimal taxRate = _configHelper.GetTaxRate() / 100;
+            decimal taxRate = _configuration.GetValue<decimal>("taxRate") / 100;
 
             taxAmount = Cart
                 .Where(x => x.Product.IsTaxable)

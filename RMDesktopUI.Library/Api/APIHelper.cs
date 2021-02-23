@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Net.Http.Formatting;
 using RMDesktopUi.Library.Models;
 using RMDesktopUI.Library.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace RMDesktopUi.Library.Api
 {
@@ -16,20 +17,23 @@ namespace RMDesktopUi.Library.Api
     {
         private HttpClient _apiClient;
         private readonly ILoggedInUserModel _loggedInUser;
-        public APIHelper(ILoggedInUserModel loggedInUser)
+        readonly IConfiguration _configuration;
+
+        public APIHelper(ILoggedInUserModel loggedInUser, IConfiguration configuration)
         {
-            InitializeClient();
             _loggedInUser = loggedInUser;
+            _configuration = configuration;
+            InitializeClient();
         }
         private void InitializeClient()
         {
-            string api = ConfigurationManager.AppSettings["api"];
+            string api = _configuration.GetValue<string>("api");
             _apiClient = new HttpClient();
             _apiClient.BaseAddress = new Uri(api);
             _apiClient.DefaultRequestHeaders.Accept.Clear();
             _apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public HttpClient apiClient
+        public HttpClient ApiClient
         {
             get
             {

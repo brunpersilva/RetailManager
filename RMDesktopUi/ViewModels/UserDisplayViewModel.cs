@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Caliburn.Micro;
 using RMDesktopUI.Library.Api;
-using RMDesktopUI.Library.Helpers;
 using RMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +17,6 @@ namespace RMDesktopUi.ViewModels
     {
         private readonly IUserEndpoint _userEndpoint;
         //private readonly IMapper _mapper;
-        private readonly IConfigHelper _configHelper;
         private readonly StatusInfoViewModel _status;
         private readonly IWindowManager _window;
 
@@ -107,10 +105,9 @@ namespace RMDesktopUi.ViewModels
             }
         }
 
-        public UserDisplayViewModel(IUserEndpoint userEndpoint, IConfigHelper configHelper, StatusInfoViewModel status, IWindowManager window)
+        public UserDisplayViewModel(IUserEndpoint userEndpoint, StatusInfoViewModel status, IWindowManager window)
         {
             _userEndpoint = userEndpoint;
-            _configHelper = configHelper;
             _status = status;
             _window = window;
         }

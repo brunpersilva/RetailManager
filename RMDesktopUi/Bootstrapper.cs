@@ -12,14 +12,15 @@ using System.Windows;
 using System.Windows.Controls;
 using RMDesktopUI.Library.Api;
 using AutoMapper;
-using RMDesktopUI.Library.Helpers;
 using RMDesktopUi.Models;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace RMDesktopUi
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private SimpleContainer _container = new SimpleContainer();
+        private readonly SimpleContainer _container = new SimpleContainer();
         public Bootstrapper()
         {
             Initialize();
@@ -40,6 +41,19 @@ namespace RMDesktopUi
             var output = config.CreateMapper();
             return output;
         }
+        private IConfiguration AddConfiguration()
+        {
+             IConfigurationBuilder builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+#if DEBUG
+            builder.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+#else
+            builder.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+#endif 
+            return builder.Build();
+
+        }
 
         protected override void Configure()
         {
@@ -50,14 +64,13 @@ namespace RMDesktopUi
                 .PerRequest<IUserEndpoint, UserEndpoint>()
                 .PerRequest<ISaleEndpoint, SaleEndpoint>();
 
-
-
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<ILoggedInUserModel, LoggedInUserModel>()
-                .Singleton<IConfigHelper, ConfigHelper>()
                 .Singleton<IAPIHelper, APIHelper>();
+
+            _container.RegisterInstance(typeof(IConfiguration), "IConfiguration", AddConfiguration());
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)
