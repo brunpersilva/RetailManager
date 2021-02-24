@@ -33,6 +33,15 @@ namespace RMApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Allows any url to acess the API 
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("OpenCorsPolicy", opt =>
+                opt.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -94,11 +103,12 @@ namespace RMApi
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/Error"); 
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseCors(policyName: "OpenCorsPolicy");
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -107,7 +117,7 @@ namespace RMApi
             app.UseAuthorization();
 
             app.UseSwagger();
-            app.UseSwaggerUI(x=> x.SwaggerEndpoint("/swagger/v1/swagger.json", "Retail Manager Api v1"));
+            app.UseSwaggerUI(x => x.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Retail Manager Api v1"));
 
             app.UseEndpoints(endpoints =>
             {

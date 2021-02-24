@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "RMData", "RMData\RMData.sqlproj", "{60EE5A05-938E-4969-932C-F379FCF5A6B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMDesktopUi", "RMDesktopUi\RMDesktopUi.csproj", "{42CA304C-15AA-4901-9407-993F565ACC2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RMDesktopUi", "RMDesktopUi\RMDesktopUi.csproj", "{42CA304C-15AA-4901-9407-993F565ACC2A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RMDataManager.Library", "RMDataManager.Library\RMDataManager.Library.csproj", "{D88431B2-5A10-4F19-92D7-F1E5B223B50E}"
 EndProject
@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		RoadMap.txt = RoadMap.txt
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{1F13ED0C-4906-4CF5-AD95-EC42E0C473F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portal", "Portal\Portal.csproj", "{FFA59A0A-8594-4F16-BF4B-B44C06B99A38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +56,10 @@ Global
 		{384433F7-88D4-48F6-BAF8-2E94D7C9F865}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{384433F7-88D4-48F6-BAF8-2E94D7C9F865}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{384433F7-88D4-48F6-BAF8-2E94D7C9F865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFA59A0A-8594-4F16-BF4B-B44C06B99A38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA59A0A-8594-4F16-BF4B-B44C06B99A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA59A0A-8594-4F16-BF4B-B44C06B99A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA59A0A-8594-4F16-BF4B-B44C06B99A38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +70,7 @@ Global
 		{D88431B2-5A10-4F19-92D7-F1E5B223B50E} = {B2349E09-61B0-49EC-9186-58BE42E5782F}
 		{5A688F14-6552-41FA-818B-A699B1F1A96E} = {B9C53AC6-9F4A-40D6-8D66-9AD96CA14E81}
 		{384433F7-88D4-48F6-BAF8-2E94D7C9F865} = {B2349E09-61B0-49EC-9186-58BE42E5782F}
+		{FFA59A0A-8594-4F16-BF4B-B44C06B99A38} = {1F13ED0C-4906-4CF5-AD95-EC42E0C473F5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {30268B19-2EBE-4915-92FA-0BCE9B6FA698}
