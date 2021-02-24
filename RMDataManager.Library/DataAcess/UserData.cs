@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RMDataManager.Library.Models;
-using RMDataManager.Library.Internal.DataAcess;
 using Microsoft.Extensions.Configuration;
 
 namespace RMDataManager.Library.DataAcess

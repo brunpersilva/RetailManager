@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RMDataManager.Library.Internal.DataAcess
+namespace RMDataManager.Library.DataAcess
 {
     public interface ISqlDataAcess
     {

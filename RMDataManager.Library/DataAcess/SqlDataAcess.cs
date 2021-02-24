@@ -8,7 +8,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace RMDataManager.Library.Internal.DataAcess
+namespace RMDataManager.Library.DataAcess
 {
     public class SqlDataAcess : IDisposable, ISqlDataAcess
     {
@@ -92,7 +92,7 @@ namespace RMDataManager.Library.Internal.DataAcess
                 {
                     CommitTransaction();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _logger.LogError(ex, "Commit transaction failed in the dispose method.");
                 }

@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Authentication;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using RMDataManager.Library.DataAcess;
-using RMDataManager.Library.Internal.DataAcess;
 
 namespace RMApi
 {
