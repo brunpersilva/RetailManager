@@ -13,7 +13,7 @@ namespace RMDesktopUi.ViewModels
     public class LoginViewModel : Screen
     {
         private string _userName = "brunpersilva@gmail.com";
-        private string _password = "Senha12.";
+        private string _password = "Senha12."; //dummy password
         private readonly IAPIHelper _apihelper;
         private readonly IEventAggregator _events;
         public LoginViewModel(IAPIHelper apihelper, IEventAggregator events)
