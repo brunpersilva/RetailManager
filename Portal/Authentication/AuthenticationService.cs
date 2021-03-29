@@ -27,12 +27,12 @@ namespace Portal.Authentication
             _authStateProvider = authStateProvider;
             _localStorage = localStorage;
             _config = config;
-            _authTokenStorageKey = _config["_authTokenStorageKey"];
+            _authTokenStorageKey = _config["authTokenStorageKey"];
         }
 
         public async Task<AuthenticadedUserModel> Login(AuthenticationUserModel userForAuthentication)
         {
-            var data = new FormUrlEncodedContent(new[]
+            FormUrlEncodedContent data = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("grant_type", "password"),
                 new KeyValuePair<string, string>("username", userForAuthentication.Email),
@@ -52,11 +52,11 @@ namespace Portal.Authentication
                 authContent,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            await _localStorage.SetItemAsync(_authTokenStorageKey, result.Acess_Token);
+            await _localStorage.SetItemAsync(_authTokenStorageKey, result.Access_Token);
 
-            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Acess_Token);
+            ((AuthStateProvider)_authStateProvider).NotifyUserAuthentication(result.Access_Token);
 
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Acess_Token);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Access_Token);
 
             return result;
         }

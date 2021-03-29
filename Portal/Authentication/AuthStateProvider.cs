@@ -26,7 +26,7 @@ namespace Portal.Authentication
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            string authTokenStorageKey = _config["_authTokenStorageKey"];
+            string authTokenStorageKey = _config["authTokenStorageKey"];
             var token = await _localStorage.GetItemAsync<string>(authTokenStorageKey);
             
             if (string.IsNullOrWhiteSpace(token))
