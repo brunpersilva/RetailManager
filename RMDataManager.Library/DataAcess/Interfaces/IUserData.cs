@@ -5,6 +5,7 @@ namespace RMDataManager.Library.DataAcess
 {
     public interface IUserData
     {
+        void CreateUser(UserModel user);
         List<UserModel> GetUSerById(string Id);
     }
 }

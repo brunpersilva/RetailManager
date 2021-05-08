@@ -22,5 +22,10 @@ namespace RMDataManager.Library.DataAcess
 
             return output;
         }
+
+        public void CreateUser (UserModel user)
+        {
+            _sql.SaveData("dbo.spUser_Insert", new {user.Id, user.FirstName, user.LastName, user.EmailAdress }, "RMData");
+        }
     }
 }

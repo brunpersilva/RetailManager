@@ -36,11 +36,68 @@ namespace RMApi.Controllers
             _userData = userData;
             _logger = logger;
         }
+
         [HttpGet]
         public UserModel GetById()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return _userData.GetUSerById(userId).First();
+        }
+
+        public record UserRegistrationModel(
+            string FirstName,
+            string LastName,
+            string EmailAdress,
+            string Password
+        );
+
+        [HttpPost]
+        [Route("Register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] UserRegistrationModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var existinguser = await _userManager.FindByEmailAsync(user.EmailAdress);
+                if (existinguser is null)
+                {
+                    IdentityUser newUser = new()
+                    {
+                        Email = user.EmailAdress,
+                        EmailConfirmed = true,
+                        UserName = user.EmailAdress,
+                    };
+                    var result = await _userManager.CreateAsync(newUser, user.Password);
+
+                    if (result.Succeeded)
+                    {
+                        existinguser = await _userManager.FindByEmailAsync(user.EmailAdress);
+
+                        if (existinguser is null)
+                        {
+                            return BadRequest();
+                        }
+
+                        UserModel u = new()
+                        {
+                            Id = existinguser.Id,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            EmailAdress = user.EmailAdress,
+                            
+                        };
+
+                        _userData.CreateUser(u);
+
+
+
+                        return Ok();
+                    }
+
+                }
+            }
+
+            return BadRequest();
         }
 
         [Authorize(Roles = "Admin")]
@@ -82,7 +139,7 @@ namespace RMApi.Controllers
         {
             string loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(pairing.UserId);
-            
+
             _logger.LogInformation("Admin {Admin} added user {User} to role {Role}",
                 loggedInUserId, user.Id, pairing.RoleName);
 

@@ -2,7 +2,7 @@
 @inject NavigationManager NavManager
 
 
-<EditForm Model="model" OnValidSubmit="ExecuteLogin" class="card card-body bg-light mt-5">
+<EditForm Model="model" OnValidSubmit="ExecuteLogin">
 
     <div class="form-row">
         <div class="col-auto">
@@ -12,7 +12,7 @@
         </div>
         <div class="col-auto">
             <label for="password" class="sr-only">Password</label>
-            <InputText type="password" class="form-control" @bind-Value="model.PassWord" placeholder="Password" />
+            <InputText type="password" id="password" class="form-control" @bind-Value="model.PassWord" placeholder="Password" />
 
         </div>
 
