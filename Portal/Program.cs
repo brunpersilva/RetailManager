@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Portal.Authentication;
+using RMDesktopUi.Library.Api;
+using RMDesktopUI.Library.Api;
+using RMDesktopUI.Library.Models;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -22,7 +25,12 @@ namespace Portal
             builder.Services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            
+            builder.Services.AddSingleton<IAPIHelper, APIHelper>();
+            builder.Services.AddSingleton<ILoggedInUserModel, LoggedInUserModel>();
+            builder.Services.AddTransient<IProductEndpoint, ProductEndpoint>();
+            builder.Services.AddTransient<ISaleEndpoint, SaleEndpoint>();
+            
             await builder.Build().RunAsync();
         }
     }

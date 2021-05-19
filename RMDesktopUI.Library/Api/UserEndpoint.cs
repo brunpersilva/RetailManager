@@ -50,6 +50,26 @@ namespace RMDesktopUI.Library.Api
             }
         }
 
+        public async Task CreatUser(CreateUserModel model)
+        {
+            var data = new
+            {
+                model.FirstName,
+                model.LastName,
+                model.EmailAdress,
+                model.Password
+            };
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.PostAsJsonAsync("api/User/Register", data)) 
+            {
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+
+            }
+
+        }
+
         public async Task AddUserToRole(string userId, string roleName)
         {
             var data = new { userId, roleName };
