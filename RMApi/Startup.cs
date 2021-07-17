@@ -33,6 +33,8 @@ namespace RMApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             //Allows any url to acess the API 
             services.AddCors(policy =>
             {
@@ -99,7 +101,7 @@ namespace RMApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {

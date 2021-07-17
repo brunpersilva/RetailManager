@@ -7,7 +7,7 @@
     <div class="form-row">
         <div class="col-auto">
             <label for="email" class="sr-only">Email</label>
-            <InputText id="email" class="form-control" @bind-Value="model.Email" placeholder="Email Adress"/>
+            <InputText id="email" class="form-control" @bind-Value="model.Email" placeholder="Email Adress" />
 
         </div>
         <div class="col-auto">
@@ -24,8 +24,15 @@
             <button type="button" class="btn btn-primary" @onclick="RegisterUser">Register</button>
         </div>
     </div>
+    @if (showAuthenticationError)
+    {
+        <div class="form-row">
+            <div class="text-danger">
+                @authenticationErrorText
+            </div>
+        </div>
+    }
 </EditForm>
-
 
 @code {
     private AuthenticationUserModel model = new();

@@ -120,7 +120,7 @@ namespace RMDesktopUi.ViewModels
             NotifyOfPropertyChange(() => CanCheckOut);
         }
 
-        private BindingList<CartItemDisplayModel> _cart = new BindingList<CartItemDisplayModel>();
+        private BindingList<CartItemDisplayModel> _cart = new();
 
         public BindingList<CartItemDisplayModel> Cart
         {
@@ -208,7 +208,7 @@ namespace RMDesktopUi.ViewModels
             }
             else
             {
-                CartItemDisplayModel item = new CartItemDisplayModel { Product = SelectedProduct, QuantityInCart = ItemQuantity };
+                CartItemDisplayModel item = new() { Product = SelectedProduct, QuantityInCart = ItemQuantity };
                 Cart.Add(item);
             }
 
@@ -272,7 +272,7 @@ namespace RMDesktopUi.ViewModels
         public async Task CheckOut()
         {
             //Create a SalaModel
-            SaleModel sale = new SaleModel();
+            SaleModel sale = new();
             foreach (CartItemDisplayModel item in Cart)
             {
                 sale.SaleDetails.Add(new SaleDetailModel

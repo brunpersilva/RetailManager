@@ -15,15 +15,13 @@ namespace RMDesktopUi.ViewModels
     public class ShellViewModel : Conductor<object>, IHandle<LogOnEvent>
     {
         private readonly IEventAggregator _events;
-        private readonly SalesViewModel _salesVM;
         private readonly ILoggedInUserModel _user;
         private readonly IAPIHelper _aPIHelper;
 
-        public ShellViewModel(IEventAggregator events, SalesViewModel salesVM,
+        public ShellViewModel(IEventAggregator events,
            ILoggedInUserModel user, IAPIHelper aPIHelper)
         {
             _events = events;
-            _salesVM = salesVM;
             _user = user;
             _aPIHelper = aPIHelper;
             _events.SubscribeOnPublishedThread(this);

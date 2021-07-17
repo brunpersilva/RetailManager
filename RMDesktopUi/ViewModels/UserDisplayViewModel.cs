@@ -40,7 +40,10 @@ namespace RMDesktopUi.ViewModels
                 SelectedUserName = value.Email;
                 UserRoles.Clear();
                 UserRoles = new BindingList<string>(value.Roles.Select(x => x.Value).ToList());
-                LoadRoles();
+
+                //Todo - Pull to method/event
+                LoadRoles().Wait();
+
                 NotifyOfPropertyChange(() => SelectedUser);
                 NotifyOfPropertyChange(() => AvailableRoles);
 
@@ -70,7 +73,7 @@ namespace RMDesktopUi.ViewModels
             }
         }
 
-        private BindingList<string> _availableRoles = new BindingList<string>();
+        private BindingList<string> _availableRoles = new();
 
         public BindingList<string> AvailableRoles
         {
@@ -93,7 +96,7 @@ namespace RMDesktopUi.ViewModels
                 NotifyOfPropertyChange(() => SelectedUserName);
             }
         }
-        private BindingList<string> _userRoles = new BindingList<string>();
+        private BindingList<string> _userRoles = new();
 
         public BindingList<string> UserRoles
         {
